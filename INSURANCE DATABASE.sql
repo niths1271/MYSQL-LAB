@@ -42,6 +42,7 @@ SELECT * FROM PARTICIPATED;
 
 -- b. Add a new accident to the database.
 INSERT INTO ACCIDENT VALUE('20000','2003-05-13','Frazer Town');
+SELECT * FROM ACCIDENT;
 
 -- iv. Find the total number of people who owned cars that involved in accidents in 2008.
 SELECT COUNT(*) FROM ACCIDENT WHERE YEAR(ADATE)=2002;
