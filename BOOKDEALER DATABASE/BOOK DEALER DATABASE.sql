@@ -14,15 +14,15 @@ CREATE TABLE CATEGORY(CATEGORY_ID INT,DESCRIPTION VARCHAR(30),PRIMARY KEY(CATEGO
 CREATE TABLE ORDER_DETAILS(ORDER_NO INT,BOOK_ID INT,QUANTITY INT,PRIMARY KEY(ORDER_NO),
                           FOREIGN KEY(BOOK_ID) REFERENCES CATALOG(BOOK_ID) ON DELETE CASCADE);
 INSERT INTO AUTHOR(AUTHOR_ID,ANAME,ACITY,ACOUNTRY) VALUES (1001,'TERAS CHAN', 'CA','USA'),
-												          (1002,'STEVENS', 'ZOMBI','UGANDA'),
+							  (1002,'STEVENS', 'ZOMBI','UGANDA'),
                                                           (1003,'M MANO', 'CAIR','CANADA'),
-														  (1004,'KARTHIK B.P', 'NEW YORK','USA'),
+							  (1004,'KARTHIK B.P', 'NEW YORK','USA'),
                                                           (1005,'WILLIAM STALLINGS', 'LAS VEGAS','USA');
 INSERT INTO PUBLISHER(PUBLISHER_ID,PNAME,PCITY,PCOUNTRY) VALUES (1,'PEARSON', 'NEW YORK','USA'),
-																(2,'EEE','NEW SOUTH WALES','USA'),
-																(3,'PHI','DELHI','INDIA'),
-										                         (4,'WILLEY', 'BERLIN','GERMANY'),
-										                         (5,'MGH', 'NEW YORK','USA');
+							        (2,'EEE','NEW SOUTH WALES','USA'),
+								(3,'PHI','DELHI','INDIA'),
+							        (4,'WILLEY', 'BERLIN','GERMANY'),
+					                        (5,'MGH', 'NEW YORK','USA');
                                                                  
 insert into category values(1001,'CSE');
 insert into category values(1002,'ADA');
