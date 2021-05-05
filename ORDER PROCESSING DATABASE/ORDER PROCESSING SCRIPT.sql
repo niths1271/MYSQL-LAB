@@ -18,20 +18,20 @@ CREATE TABLE SHIPMENT(ORDER_ID INT,WAREHOUSE_ID INT,SHIPDATE DATE,
 
 
 INSERT INTO CUSTOMER(CUST_ID,CNAME,CITY) VALUES (771, 'PUSHPA K','BANGALORE'),
-												(772, 'SUMAN', 'MUMBAI'),
+						(772, 'SUMAN', 'MUMBAI'),
                                                 (773,'SOURAV','CALICUT'),
-												(774, 'LAILA', 'HYDERABAD'),
-												(775, 'FAIZAL',' BANGALORE');
+						(774, 'LAILA', 'HYDERABAD'),
+						(775, 'FAIZAL',' BANGALORE');
 INSERT INTO ORDERS(ORDER_ID,ORDER_DATE,CUST_ID,ORDER_AMOUNT) VALUES (111, '2002-01-22', 771, 18000),
-										                            (112, '2002-07-30', 774, 6000),
-																	(113, '2003-04-03', 775, 9000),
-																	(114, '2003-11-03', 775, 29000),
-																	(115, '2003-12-10', 773, 29000),
+								    (112, '2002-07-30', 774, 6000),
+								    (113, '2003-04-03', 775, 9000),
+								    (114, '2003-11-03', 775, 29000),
+							            (115, '2003-12-10', 773, 29000),
                                                                     (116, '2004-08-19', 772, 56000),
-																	(117, '2004-09-10', 771, 20000),
-										                            (118, '2004-11-20',775, 29000),
-																	(119, '2005-02-13', 774, 29000),
-																	(120, '2005-10-13', 775 ,29000);
+						         	    (117, '2004-09-10', 771, 20000),
+								    (118, '2004-11-20',775, 29000),
+								    (119, '2005-02-13', 774, 29000),
+								    (120, '2005-10-13', 775 ,29000);
                                                                     
 INSERT INTO ITEM(ITEM_ID, UNITPRICE) VALUES (5001, 503),
                                             (5002, 750),
@@ -62,15 +62,15 @@ INSERT INTO WAREHOUSE(WAREHOUSE_ID,CITY) VALUES (1,'DELHI'),
                                                 (10,'BANGALORE');
                                                 
 INSERT INTO SHIPMENT(ORDER_ID,WAREHOUSE_ID,SHIPDATE) VALUES (111,1,'2002-02-10'),
-															(112, 5 ,'2002-09-10'),
-															(113, 8 ,'2003-02-10'),
-															(114, 3 ,'2003-12-10'),
-															(115,9 ,'2004-01-19'),
-															(116, 1, '2004-09-20'),
-															(117, 5 ,'2004-09-10'),
-															(118, 7 ,'2004-11-30'),
-															(119, 7 ,'2005-04-30'),
-															(120, 6 ,'2005-12-21');
+							    (112, 5 ,'2002-09-10'),
+							    (113, 8 ,'2003-02-10'),
+							    (114, 3 ,'2003-12-10'),
+						            (115,9 ,'2004-01-19'),
+							    (116, 1, '2004-09-20'),
+						            (117, 5 ,'2004-09-10'),
+							    (118, 7 ,'2004-11-30'),
+							    (119, 7 ,'2005-04-30'),
+							    (120, 6 ,'2005-12-21');
                                                             
 -- iii) Produce a listing: CUSTNAME, #oforders, AVG_ORDER_AMT, where the middle column is the total
 -- numbers of orders by the customer and the last column is the average order amount for that
