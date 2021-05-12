@@ -44,37 +44,37 @@ foreign key (loan_number) references loan(loan_number) on delete cascade on upda
 
                                                          
 insert into branch(branch_name,branch_city,assets) values ('A','Bangalore',190000),
-														  ('B','Bangalore',200000),
+							  ('B','Bangalore',200000),
                                                           ('C','Delhi',235344),
                                                           ('D','Chennai',1050560),
                                                            ('E','Chennai',678909);
 insert into accounts(accno,branch_name,balance) VALUES (1001,'A',10000),
-													   (1002,'B',5000),
-														(1003,'C',7500),
+						        (1002,'B',5000),
+			                               (1003,'C',7500),
                                                         (1004,'D',50000),
-														(1005,'D',75000),
-														(1006,'E',560),
+							(1005,'D',75000),
+							(1006,'E',560),
                                                         (1007,"B",500),
                                                         (1008,"B",1500);
 insert into customer(customer_name,customer_street,customer_city) VALUES ("Ravi","Dasarahalli","Bangalore"),
                                                                          ("Shyam","Indiranagar","Delhi"),
                                                                          ("Seema","Vasantnagar","Chennai"),
-																		 ("Arpita","Church Street","Bangalore"),
+									 ("Arpita","Church Street","Bangalore"),
                                                                          ("Vinay","MG Road","Chennai");
 insert into depositor(customer_name,accno) VALUES ("Ravi",1001),
                                                   ("Ravi",1002),
                                                   ("Shyam",1003),
-												  ("Seema",1004),
+						  ("Seema",1004),
                                                   ("Seema",1005),
                                                   ("Arpita",1006),
-												  ("Vinay",1007),
+						  ("Vinay",1007),
                                                   ("Vinay",1008);
                                                   
 insert into loan(loan_number,branch_name,amount) VALUES (001,'A',10000),
                                                         (002,'B',25000),
                                                         (003,'B',250000),
                                                         (004,'C',5000),
-														(005,'E',90000);
+							(005,'E',90000);
                                                         
 insert into borrower(customer_name,loan_number) VALUES ("Arpita",001),
                                                        ("Ravi",002),
