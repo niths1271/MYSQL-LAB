@@ -40,7 +40,33 @@ INSERT INTO BOOK_ADOPTION(COURSE_ID,SEM,BOOK_ISBN) VALUES (11,4,1),
                                                           (22,6,6),
                                                           (55,2,7);
                                             
+-- iii) Demonstrate how you add a new text book to the database and make this book be
+-- adopted by some department.(ec department)
+INSERT INTO BOOK_ADOPTION(COURSE_ID,SEM,BOOK_ISBN) VALUE (33,4,8);
+INSERT INTO TEXT(BOOK_ISBN, BOOK_TITLE, PUBLISHER, AUTHOR) VALUE(8,'JAVA 14','ORACLE','NITHIN');
+SELECT * FROM TEXT;
 
+-- iv) Produce a list of text books (include Course #, Book-ISBN, Book-title) in the
+-- alphabetical order for courses offered by the ‘CS’ department that use more than two
+-- books.
+SELECT C.COURSE_ID,T.BOOK_ISBN,T.BOOK_TITLE FROM TEXT T,COURSE C,BOOK_ADOPTION B WHERE T.BOOK_ISBN=B.BOOK_ISBN AND B.COURSE_ID=C.COURSE_ID AND C.DEPT="CS" AND
+															(SELECT COUNT(B.BOOK_ISBN) FROM BOOK_ADOPTION B WHERE C.COURSE_ID=B.COURSE_ID)>=2 ORDER BY T.BOOK_TITLE;
+                                            
+-- --v) List any department that has all its adopted books published by a specific publisher.
+SELECT DISTINCT C.DEPT
+	FROM COURSE C
+     WHERE C.DEPT IN
+     ( SELECT C.DEPT
+     FROM COURSE C,BOOK_ADOPTION B,TEXT T
+     WHERE C.COURSE_ID=B.COURSE_ID
+     AND T.BOOK_ISBN=B.BOOK_ISBN
+     AND T.PUBLISHER='Princeton')
+     AND C.DEPT NOT IN
+     (SELECT C.DEPT
+     FROM COURSE C,BOOK_ADOPTION B,TEXT T
+     WHERE C.COURSE_ID=B.COURSE_ID
+     AND T.BOOK_ISBN=B.BOOK_ISBN
+     AND T.PUBLISHER != 'Princeton');
 
 
 
