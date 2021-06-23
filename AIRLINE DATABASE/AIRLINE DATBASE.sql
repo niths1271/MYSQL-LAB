@@ -1,5 +1,5 @@
--- i. Create the above tables by properly specifying the primary keys and the foreign keys.
--- ii. Enter at least five tuples for each relation.
+--  Create the above tables by properly specifying the primary keys and the foreign keys.
+--  Enter at least five tuples for each relation.
 CREATE DATABASE AIRLINE;
 USE AIRLINE;
 -- SHOW DATABASES;
@@ -22,6 +22,16 @@ INSERT INTO FLIGHTS (FL_NO, FFROM, FTO, DISTANCE, DEPARTS, ARRIVES, PRICE) VALUE
             (6,'BANGALORE','FRANKFURT',19500,'10:00:00','07:45:00',95000),
             (7,'BANGALORE','FRANKFURT',17000,'12:00:00','06:30:00',99000);
             
+INSERT INTO FLIGHTS (FL_NO, FFROM, FTO, DISTANCE, DEPARTS, ARRIVES, PRICE) VALUES 
+            (8,'MADISON','NEW YORK', 19000, '10:00:00', '17:00:00', 100000),
+            (9,'MADISON','NEW YORK', 29000, '10:00:00', '18:30:00', 100000),
+            (10,'MADISON','LONDON', 30000, '11:00:00', '14:00:00', 55000),
+            (10,'LONDON','NEW YORK', 30000, '14:05:00', '17:50:00', 50000),
+            (11,'LONDON','NEW YORK', 31000, '14:06:00', '18:05:00', 51000),
+            (11,'LONDON','BERLIN', 15000, '14:06:00', '16:05:00', 17000),
+            (11,'BERLIN','NEW YORK', 18000, '16:06:00', '17:59:00', 17401);
+            
+            
 INSERT INTO AIRCRAFT (AID, ANAME, CRUISINGRANGE) VALUES 
 			(123,'AIRBUS',1000),
 			(302,'BOEING',5000),
@@ -39,6 +49,11 @@ INSERT INTO EMPLOYEE (EID, ENAME, SALARY) VALUES
 			(5,'RON',90000),
 			(6,'JOSH',75000),
 			(7,'RAM',100000);
+
+INSERT INTO EMPLOYEE (EID, ENAME, SALARY) VALUES
+			(8,'RAMESH',70000),
+			(9,'SURESH',80000);
+
             
 INSERT INTO CERTIFIED (EID, AID) VALUES
 			(1,123),
@@ -65,24 +80,50 @@ SELECT DISTINCT A.ANAME FROM AIRCRAFT A,CERTIFIED C,EMPLOYEE E WHERE A.AID=C.AID
 
 -- ii. For each pilot who is certified for more than three aircrafts, find the eid and the maximum cruising
 -- range of the aircraft for which she or he is certified.
-SELECT E.EID,MAX(A.CRUISINGRANGE) FROM AIRFRAFT A,CERTIFIED C,EMPLOYEE E WHERE A.AID=C.AID AND C.EID=E.EID
+SELECT E.EID,MAX(A.CRUISINGRANGE) FROM AIRCRAFT A,CERTIFIED C,EMPLOYEE E WHERE A.AID=C.AID AND C.EID=E.EID GROUP BY E.EID HAVING COUNT(E.EID)>3;
 
 -- iii. Find the names of pilots whose salary is less than the price of the cheapest route from Bengaluru to
 -- Frankfurt.
-
+SELECT ENAME FROM EMPLOYEE WHERE EID IN(SELECT EID FROM CERTIFIED) AND SALARY<(SELECT MIN(PRICE) FROM FLIGHTS WHERE FFROM="BANGALORE" AND FTO="FRANKFURT");
 
 -- iv. For all aircraft with cruising range over 1000 Kms, find the name of the aircraft and the average
 -- salary of all pilots certified for this aircraft.
-
+SELECT A.ANAME,AVG(E.SALARY) FROM AIRCRAFT A,CERTIFIED C,EMPLOYEE E WHERE A.AID=C.AID AND C.EID=E.EID AND A.CRUISINGRANGE>1000 GROUP BY A.ANAME;
 
 -- v. Find the names of pilots certified for some Boeing aircraft.
-
+SELECT E.ENAME FROM AIRCRAFT A,CERTIFIED C,EMPLOYEE E WHERE A.AID=C.AID AND C.EID=E.EID AND A.ANAME="BOEING";
 
 -- vi. Find the aids of all aircraft that can be used on routes from Bengaluru to New Delhi.
-
+SELECT AID FROM AIRCRAFT WHERE CRUISINGRANGE>=(SELECT DISTANCE FROM FLIGHTS  WHERE FFROM="BANGALORE" AND FTO="DELHI");
 
 -- vii. A customer wants to travel from Madison to New York with no more than two changes of flight. List
 -- the choice of departure times from Madison if the customer wants to arrive in New York by 6 p.m.
-
+SELECT F.DEPARTS
+FROM FLIGHTS F
+WHERE F.FL_NO IN ( ( SELECT F0.FL_NO
+ FROM FLIGHTS F0
+ WHERE F0.FFROM = 'MADISON' AND F0.FTO = 'NEW YORK'
+ AND F0.ARRIVES < '18:00:00' )
+ UNION
+ ( SELECT F0.FL_NO
+ FROM FLIGHTS F0, FLIGHTS F1
+ WHERE F0.FFROM = 'MADISON' AND F0.FTO != 'NEW YORK'
+ AND F0.FTO = F1.FFROM AND F1.FTO = 'NEW YORK'
+ AND F1.DEPARTS > F0.ARRIVES
+ AND F1.ARRIVES < '18:00:00' )
+ UNION
+ ( SELECT F0.FL_NO
+ FROM FLIGHTS F0, FLIGHTS F1, FLIGHTS F2
+ WHERE F0.FFROM = 'MADISON'
+ AND F0.FTO = F1.FFROM
+ AND F1.FTO = F2.FFROM
+ AND F2.FTO = 'NEW YORK'
+ AND F0.FTO != 'NEW YORK'
+ AND F1.FTO != 'NEW YORK'
+ AND F1.DEPARTS > F0.ARRIVES
+ AND F2.DEPARTS > F1.ARRIVES
+ AND F2.ARRIVES < '18:00:00' ));
 
 -- viii. Print the name and salary of every non-pilot whose salary is more than the average salary for pilots.
+SELECT ENAME FROM EMPLOYEE WHERE EID NOT IN(SELECT EID FROM CERTIFIED) AND SALARY>(SELECT AVG(SALARY) FROM EMPLOYEE WHERE EID IN(SELECT EID FROM CERTIFIED));
+
